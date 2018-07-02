@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="lojawebModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tab_categorias">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ds_categoria" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tab_produtos">
+          <Key>
+            <PropertyRef Name="id_produto" />
+          </Key>
+          <Property Name="id_produto" Type="int" Nullable="false" />
+          <Property Name="ds_produto" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="dthr_cadastro" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="usuario_cadastro" Type="uint" Nullable="false" />
+          <Property Name="preco_venda" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="foto" Type="blob" />
+          <Property Name="id_categoria" Type="uint" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tab_tipo_usuario">
+          <Key>
+            <PropertyRef Name="id_tipo_usuario" />
+          </Key>
+          <Property Name="id_tipo_usuario" Type="utinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ds_tipo_usuario" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tab_usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nm_usuario" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="id_tipo_usuario" Type="utinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_tab_produtos_tab_categorias">
+          <End Role="tab_categorias" Type="Self.tab_categorias" Multiplicity="1" />
+          <End Role="tab_produtos" Type="Self.tab_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_categorias">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="tab_produtos">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tab_produtos_tab_usuario1">
+          <End Role="tab_usuario" Type="Self.tab_usuario" Multiplicity="1" />
+          <End Role="tab_produtos" Type="Self.tab_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tab_produtos">
+              <PropertyRef Name="usuario_cadastro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tab_usuario_tab_tipo_usuario">
+          <End Role="tab_tipo_usuario" Type="Self.tab_tipo_usuario" Multiplicity="1" />
+          <End Role="tab_usuario" Type="Self.tab_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_tipo_usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Principal>
+            <Dependent Role="tab_usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lojawebModelStoreContainer">
+          <EntitySet Name="tab_categorias" EntityType="Self.tab_categorias" Schema="lojaweb" store:Type="Tables" />
+          <EntitySet Name="tab_produtos" EntityType="Self.tab_produtos" Schema="lojaweb" store:Type="Tables" />
+          <EntitySet Name="tab_tipo_usuario" EntityType="Self.tab_tipo_usuario" Schema="lojaweb" store:Type="Tables" />
+          <EntitySet Name="tab_usuario" EntityType="Self.tab_usuario" Schema="lojaweb" store:Type="Tables" />
+          <AssociationSet Name="fk_tab_produtos_tab_categorias" Association="Self.fk_tab_produtos_tab_categorias">
+            <End Role="tab_categorias" EntitySet="tab_categorias" />
+            <End Role="tab_produtos" EntitySet="tab_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tab_produtos_tab_usuario1" Association="Self.fk_tab_produtos_tab_usuario1">
+            <End Role="tab_usuario" EntitySet="tab_usuario" />
+            <End Role="tab_produtos" EntitySet="tab_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tab_usuario_tab_tipo_usuario" Association="Self.fk_tab_usuario_tab_tipo_usuario">
+            <End Role="tab_tipo_usuario" EntitySet="tab_tipo_usuario" />
+            <End Role="tab_usuario" EntitySet="tab_usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="lojawebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tab_categorias">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ds_categoria" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tab_produtos" Relationship="Self.fk_tab_produtos_tab_categorias" FromRole="tab_categorias" ToRole="tab_produtos" />
+        </EntityType>
+        <EntityType Name="tab_produtos">
+          <Key>
+            <PropertyRef Name="id_produto" />
+          </Key>
+          <Property Name="id_produto" Type="Int32" Nullable="false" />
+          <Property Name="ds_produto" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dthr_cadastro" Type="DateTime" Nullable="false" />
+          <Property Name="usuario_cadastro" Type="Int64" Nullable="false" />
+          <Property Name="preco_venda" Type="Decimal" Nullable="false" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="id_categoria" Type="Int64" Nullable="false" />
+          <Property Name="status" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="tab_categorias" Relationship="Self.fk_tab_produtos_tab_categorias" FromRole="tab_produtos" ToRole="tab_categorias" />
+          <NavigationProperty Name="tab_usuario" Relationship="Self.fk_tab_produtos_tab_usuario1" FromRole="tab_produtos" ToRole="tab_usuario" />
+        </EntityType>
+        <EntityType Name="tab_tipo_usuario">
+          <Key>
+            <PropertyRef Name="id_tipo_usuario" />
+          </Key>
+          <Property Name="id_tipo_usuario" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ds_tipo_usuario" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tab_usuario" Relationship="Self.fk_tab_usuario_tab_tipo_usuario" FromRole="tab_tipo_usuario" ToRole="tab_usuario" />
+        </EntityType>
+        <EntityType Name="tab_usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nm_usuario" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_tipo_usuario" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="tab_produtos" Relationship="Self.fk_tab_produtos_tab_usuario1" FromRole="tab_usuario" ToRole="tab_produtos" />
+          <NavigationProperty Name="tab_tipo_usuario" Relationship="Self.fk_tab_usuario_tab_tipo_usuario" FromRole="tab_usuario" ToRole="tab_tipo_usuario" />
+        </EntityType>
+        <Association Name="fk_tab_produtos_tab_categorias">
+          <End Role="tab_categorias" Type="Self.tab_categorias" Multiplicity="1" />
+          <End Role="tab_produtos" Type="Self.tab_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_categorias">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="tab_produtos">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tab_produtos_tab_usuario1">
+          <End Role="tab_usuario" Type="Self.tab_usuario" Multiplicity="1" />
+          <End Role="tab_produtos" Type="Self.tab_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tab_produtos">
+              <PropertyRef Name="usuario_cadastro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tab_usuario_tab_tipo_usuario">
+          <End Role="tab_tipo_usuario" Type="Self.tab_tipo_usuario" Multiplicity="1" />
+          <End Role="tab_usuario" Type="Self.tab_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tab_tipo_usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Principal>
+            <Dependent Role="tab_usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="lojawebDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tab_categorias" EntityType="Self.tab_categorias" />
+          <EntitySet Name="tab_produtos" EntityType="Self.tab_produtos" />
+          <EntitySet Name="tab_tipo_usuario" EntityType="Self.tab_tipo_usuario" />
+          <EntitySet Name="tab_usuario" EntityType="Self.tab_usuario" />
+          <AssociationSet Name="fk_tab_produtos_tab_categorias" Association="Self.fk_tab_produtos_tab_categorias">
+            <End Role="tab_categorias" EntitySet="tab_categorias" />
+            <End Role="tab_produtos" EntitySet="tab_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tab_produtos_tab_usuario1" Association="Self.fk_tab_produtos_tab_usuario1">
+            <End Role="tab_usuario" EntitySet="tab_usuario" />
+            <End Role="tab_produtos" EntitySet="tab_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tab_usuario_tab_tipo_usuario" Association="Self.fk_tab_usuario_tab_tipo_usuario">
+            <End Role="tab_tipo_usuario" EntitySet="tab_tipo_usuario" />
+            <End Role="tab_usuario" EntitySet="tab_usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="lojawebModelStoreContainer" CdmEntityContainer="lojawebDB">
+          <EntitySetMapping Name="tab_categorias">
+            <EntityTypeMapping TypeName="lojawebModel.tab_categorias">
+              <MappingFragment StoreEntitySet="tab_categorias">
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="ds_categoria" ColumnName="ds_categoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tab_produtos">
+            <EntityTypeMapping TypeName="lojawebModel.tab_produtos">
+              <MappingFragment StoreEntitySet="tab_produtos">
+                <ScalarProperty Name="id_produto" ColumnName="id_produto" />
+                <ScalarProperty Name="ds_produto" ColumnName="ds_produto" />
+                <ScalarProperty Name="dthr_cadastro" ColumnName="dthr_cadastro" />
+                <ScalarProperty Name="usuario_cadastro" ColumnName="usuario_cadastro" />
+                <ScalarProperty Name="preco_venda" ColumnName="preco_venda" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tab_tipo_usuario">
+            <EntityTypeMapping TypeName="lojawebModel.tab_tipo_usuario">
+              <MappingFragment StoreEntitySet="tab_tipo_usuario">
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+                <ScalarProperty Name="ds_tipo_usuario" ColumnName="ds_tipo_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tab_usuario">
+            <EntityTypeMapping TypeName="lojawebModel.tab_usuario">
+              <MappingFragment StoreEntitySet="tab_usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nm_usuario" ColumnName="nm_usuario" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
